@@ -1,0 +1,85 @@
+mysql> select * from course;
++-----+-----------------------+-------+
+| cid | cname                 | cfee  |
++-----+-----------------------+-------+
+| 101 | web development       | 14560 |
+| 102 | fullstack development | 10080 |
+| 103 | software development  | 16800 |
++-----+-----------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from department;
++-----+-------+-----------+
+| did | dname | loc       |
++-----+-------+-----------+
+|  21 | Sales | bangalore |
+|  22 | HR    | cbe       |
+|  23 | IT    | chennai   |
++-----+-------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select cid,count(*) as student_count from student group by cid;
++------+---------------+
+| cid  | student_count |
++------+---------------+
+|  101 |             1 |
+|  102 |             1 |
+|    3 |             1 |
++------+---------------+
+3 rows in set (0.03 sec)
+
+mysql> select did,avg(sal) as  avg_sal from employee group by did;
++------+-----------+
+| did  | avg_sal   |
++------+-----------+
+|   21 | 2500.0000 |
+|   22 | 1500.0000 |
+|   23 | 3000.0000 |
++------+-----------+
+3 rows in set (0.03 sec)
+
+mysql> select did,max(sal) as max_sal,min(sal) as min_sal from employee group by did;
++------+---------+---------+
+| did  | max_sal | min_sal |
++------+---------+---------+
+|   21 |    2500 |    2500 |
+|   22 |    1500 |    1500 |
+|   23 |    3000 |    3000 |
++------+---------+---------+
+3 rows in set (0.03 sec)
+
+mysql> select ename as 'ename',concat(sal,'monthly but want',sal*3)as 'dream salaries' from employee;
++-------+--------------------------+
+| ename | dream salaries           |
++-------+--------------------------+
+| John  | 2500monthly but want7500 |
+| Mary  | 1500monthly but want4500 |
+| Steve | 3000monthly but want9000 |
++-------+--------------------------+
+3 rows in set (0.03 sec)
+
+mysql> select did from employee group by did having sum (sal) > 5000;
+ERROR 1630 (42000): FUNCTION tasks.sum does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select * from employee;
++-----+-------+----------+------+------------+------+
+| eid | ename | job      | sal  | hiredate   | did  |
++-----+-------+----------+------+------------+------+
+|   1 | John  | Salesman | 2500 | 2025-06-30 |   21 |
+|   2 | Mary  | Clerk    | 1500 | 2025-07-07 |   22 |
+|   3 | Steve | Manager  | 3000 | 2025-09-13 |   23 |
++-----+-------+----------+------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select did from employee group by did having sum (sal) > 1500;
+ERROR 1630 (42000): FUNCTION tasks.sum does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select job,sum(sal) as total_sal from employee group by job having sum(sal)>1500;
++----------+-----------+
+| job      | total_sal |
++----------+-----------+
+| Salesman |      2500 |
+| Manager  |      3000 |
++----------+-----------+
+2 rows in set (0.00 sec)
+
+
+mysql> notee;

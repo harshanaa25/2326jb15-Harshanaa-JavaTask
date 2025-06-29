@@ -1,0 +1,162 @@
+mysql> select * from employee;
++-----+-------+----------+------+------------+------+
+| eid | ename | job      | sal  | hiredate   | did  |
++-----+-------+----------+------+------------+------+
+|   1 | John  | Salesman | 2500 | 2025-06-30 |   21 |
+|   2 | Mary  | Clerk    | 1500 | 2025-07-07 |   22 |
+|   3 | Steve | Manager  | 3000 | 2025-09-13 |   23 |
++-----+-------+----------+------+------------+------+
+3 rows in set (0.03 sec)
+
+mysql> select * from department;
++-----+-------+-----------+
+| did | dname | loc       |
++-----+-------+-----------+
+|  21 | Sales | bangalore |
+|  22 | HR    | cbe       |
+|  23 | IT    | chennai   |
++-----+-------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select e.ename,e.hiredate,d.dname 
+    -> from employee e join department d
+    -> on e.hiredate between '2025-01-01' and '2025-06-30';
++-------+------------+-------+
+| ename | hiredate   | dname |
++-------+------------+-------+
+| John  | 2025-06-30 | Sales |
+| John  | 2025-06-30 | HR    |
+| John  | 2025-06-30 | IT    |
++-------+------------+-------+
+3 rows in set (0.03 sec)
+
+mysql> select e.ename,e.hiredate,d.dname 
+    -> from employee e join department d
+    -> on e.did=d.did
+    -> on e.hiredate between '2025-01-01' and '2025-06-30';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on e.hiredate between '2025-01-01' and '2025-06-30'' at line 4
+mysql> select e.ename,e.hiredate,d.dname 
+    -> from employee e join department d
+    -> on e.did=d.did
+    -> where e.hiredate between '2025-01-01' and '2025-06-30';
++-------+------------+-------+
+| ename | hiredate   | dname |
++-------+------------+-------+
+| John  | 2025-06-30 | Sales |
++-------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from course;
++-----+-----------------------+-------+
+| cid | cname                 | cfee  |
++-----+-----------------------+-------+
+| 101 | web development       | 14560 |
+| 102 | fullstack development | 10080 |
+| 103 | software development  | 16800 |
++-----+-----------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student;
++-----+---------+-------+------+
+| sid | sname   | marks | cid  |
++-----+---------+-------+------+
+|   1 | alice   |    85 |  101 |
+|   2 | babu    |    75 |  102 |
+|   3 | charlie |    90 |    3 |
++-----+---------+-------+------+
+3 rows in set (0.03 sec)
+
+mysql> select c.cname,s.sname,c.cfee
+    -> from student s join course c
+    -> on s.id=c.id
+    -> where c.cfee>10000;
+ERROR 1054 (42S22): Unknown column 's.id' in 'on clause'
+mysql> select c.cname,s.sname,c.cfee
+    -> from student s join course c
+    -> on s.sid=c.cid
+    -> where c.cfee>10000;
+Empty set (0.00 sec)
+
+mysql> ^C
+mysql> update student set cid=103 where sname='charlie';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++-----+---------+-------+------+
+| sid | sname   | marks | cid  |
++-----+---------+-------+------+
+|   1 | alice   |    85 |  101 |
+|   2 | babu    |    75 |  102 |
+|   3 | charlie |    90 |  103 |
++-----+---------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> select c.cname,s.sname,c.cfee
+    -> from student s join course c
+    -> on s.sid=c.cid
+    -> where c.cfee>10000;
+Empty set (0.00 sec)
+
+mysql> select c.cname,s.sname,c.cfee
+    -> from student s join course c
+    -> on s.cid=c.cid
+    -> where c.cfee>10000;
++-----------------------+---------+-------+
+| cname                 | sname   | cfee  |
++-----------------------+---------+-------+
+| web development       | alice   | 14560 |
+| fullstack development | babu    | 10080 |
+| software development  | charlie | 16800 |
++-----------------------+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee;
++-----+-------+----------+------+------------+------+
+| eid | ename | job      | sal  | hiredate   | did  |
++-----+-------+----------+------+------------+------+
+|   1 | John  | Salesman | 2500 | 2025-06-30 |   21 |
+|   2 | Mary  | Clerk    | 1500 | 2025-07-07 |   22 |
+|   3 | Steve | Manager  | 3000 | 2025-09-13 |   23 |
++-----+-------+----------+------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from department;
++-----+-------+-----------+
+| did | dname | loc       |
++-----+-------+-----------+
+|  21 | Sales | bangalore |
+|  22 | HR    | cbe       |
+|  23 | IT    | chennai   |
++-----+-------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select d.dname,d.loc,count(distinct e.job
+    -> from employee e join department d
+    -> on e.did=d.did
+    -> group by d.dname,d.loc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employee e join department d
+on e.did=d.did
+group by d.dname,d.loc' at line 2
+mysql> select d.dname,d.loc,count(distinct e.job)
+    -> from employee e join department d
+    -> on e.did=d.did
+    -> group by d.dname,d.loc;
++-------+-----------+-----------------------+
+| dname | loc       | count(distinct e.job) |
++-------+-----------+-----------------------+
+| HR    | cbe       |                     1 |
+| IT    | chennai   |                     1 |
+| Sales | bangalore |                     1 |
++-------+-----------+-----------------------+
+3 rows in set (0.03 sec)
+
+mysql> select * from employee order by sal desc limit 1 offset 2;
++-----+-------+-------+------+------------+------+
+| eid | ename | job   | sal  | hiredate   | did  |
++-----+-------+-------+------+------------+------+
+|   2 | Mary  | Clerk | 1500 | 2025-07-07 |   22 |
++-----+-------+-------+------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> exit;

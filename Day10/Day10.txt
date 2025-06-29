@@ -1,0 +1,63 @@
+mysql> select * from students;
+ERROR 1146 (42S02): Table 'tasks.students' doesn't exist
+mysql> select * from student;
++-----+---------+-------+------+
+| sid | sname   | marks | cid  |
++-----+---------+-------+------+
+|   1 | alice   |    85 |  101 |
+|   2 | babu    |    75 |  102 |
+|   3 | charlie |    90 |    3 |
++-----+---------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from course;
++-----+-----------------------+-------+
+| cid | cname                 | cfee  |
++-----+-----------------------+-------+
+| 101 | web development       | 14560 |
+| 102 | fullstack development | 10080 |
+| 103 | software development  | 16800 |
++-----+-----------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee;
++-----+-------+----------+------+------------+------+
+| eid | ename | job      | sal  | hiredate   | did  |
++-----+-------+----------+------+------------+------+
+|   1 | John  | Salesman | 2500 | 2025-06-30 |   21 |
+|   2 | Mary  | Clerk    | 1500 | 2025-07-07 |   22 |
+|   3 | Steve | Manager  | 3000 | 2025-09-13 |   23 |
++-----+-------+----------+------+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where marks > 80;
++-----+---------+-------+------+
+| sid | sname   | marks | cid  |
++-----+---------+-------+------+
+|   1 | alice   |    85 |  101 |
+|   3 | charlie |    90 |    3 |
++-----+---------+-------+------+
+2 rows in set (0.03 sec)
+
+mysql> select * from course order by cfee asc;
++-----+-----------------------+-------+
+| cid | cname                 | cfee  |
++-----+-----------------------+-------+
+| 102 | fullstack development | 10080 |
+| 101 | web development       | 14560 |
+| 103 | software development  | 16800 |
++-----+-----------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from course where cname like 'j%';
+Empty set (0.00 sec)
+
+mysql> select * from employee where job ='salesman' and sal > 2000;
++-----+-------+----------+------+------------+------+
+| eid | ename | job      | sal  | hiredate   | did  |
++-----+-------+----------+------+------------+------+
+|   1 | John  | Salesman | 2500 | 2025-06-30 |   21 |
++-----+-------+----------+------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> notee;

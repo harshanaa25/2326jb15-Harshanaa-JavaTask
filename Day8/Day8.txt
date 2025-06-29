@@ -1,0 +1,217 @@
+mysql> create databse fsd_tasks;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databse fsd_tasks' at line 1
+mysql> create database fsd_tasks;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> use fsd_tasks;
+Database changed
+
+mysql> create table student (
+    -> sid int primary key auto_increment,
+    -> sname varchar(25) not null,
+    -> dob date,
+    -> enroll_date date 
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> create table course (
+    -> cid int primary key auto_increment,
+    -> cname varchar(30) not null,
+    -> cfee int not null
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into student values
+    -> ('alien','2000-05-15',curdate()),
+    -> ('babu','2002-07-20',curdate()),
+    -> ('charlie','2005-12-07',curdate());
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> desc student;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| sid         | int         | NO   | PRI | NULL    | auto_increment |
+| sname       | varchar(25) | NO   |     | NULL    |                |
+| dob         | date        | YES  |     | NULL    |                |
+| enroll_date | date        | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.04 sec)
+
+mysql> insert into student values
+    -> (1,'alien','2000-05-15',curdate()),
+    -> (2'babu','2002-07-20',curdate()),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''babu','2002-07-20',curdate()),' at line 3
+mysql> insert into student values
+    -> (1,'alien','2000-05-15',curdate()),
+    -> (2,'babu','2002-07-20',curdate()),
+    -> (3,'charlie','2005-12-07',curdate());
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into course values
+    -> (1,'Web development',25000),
+    -> (2,'Fullstack developer',50000),
+    -> (3,'Software developer',65000);
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
+ERROR 1146 (42S02): Table 'fsd_tasks.students' doesn't exist
+mysql> select * from student;
++-----+---------+------------+-------------+
+| sid | sname   | dob        | enroll_date |
++-----+---------+------------+-------------+
+|   1 | alien   | 2000-05-15 | 2025-06-23  |
+|   2 | babu    | 2002-07-20 | 2025-06-23  |
+|   3 | charlie | 2005-12-07 | 2025-06-23  |
++-----+---------+------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from course;
++-----+---------------------+-------+
+| cid | cname               | cfee  |
++-----+---------------------+-------+
+|   1 | Web development     | 25000 |
+|   2 | Fullstack developer | 50000 |
+|   3 | Software developer  | 65000 |
++-----+---------------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> update course set cfee = cfee * 12;
+Query OK, 3 rows affected (0.03 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from course;
++-----+---------------------+--------+
+| cid | cname               | cfee   |
++-----+---------------------+--------+
+|   1 | Web development     | 300000 |
+|   2 | Fullstack developer | 600000 |
+|   3 | Software developer  | 780000 |
++-----+---------------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> create database library_DB;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> use library_DB;
+Database changed
+mysql> create table book (
+    -> bid int primary key auto_increment,
+    -> title varchar(30) not null,
+    -> price int not null
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table member (
+    -> mid int primary key auto_increment,
+    -> name varchar(30) not null,
+    -> bdate date);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table review (
+    -> rid int primary key,
+    -> bid int,
+    -> mid int,
+    -> rating int check (rating between 1 and 5 ),
+    -> foreign key (bid) references book(bid),
+    -> foreign key (mid) references member(mid)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into book values
+    -> (101,'George orwell',250),
+    -> (102,'War and peace',300);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into member values
+    -> (1,'Alien',curdate()),
+    -> (2,'Bob',curdate());
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into review values
+    -> (201,101,1,4),
+    -> (202,102,2,5);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> create table employee (
+    -> eid int primary key auto_increment,
+    -> ename varchar(25) not null,
+    -> salary int not null,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 5
+mysql> create table employee (
+    -> eid int primary key auto_increment,
+    -> ename varchar(25) not null,
+    -> salary int not null
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table department (
+    -> did int primary key auto_increment,
+    -> dname varchar(25) not null
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into employee values
+    -> (101,'alice',20000),
+    -> (102,'bob',25000);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into department values
+    -> (21,'Bsc it'),
+    -> (22,'Bsc ct');
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from book;
++-----+---------------+-------+
+| bid | title         | price |
++-----+---------------+-------+
+| 101 | George orwell |   250 |
+| 102 | War and peace |   300 |
++-----+---------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from member;
++-----+-------+------------+
+| mid | name  | bdate      |
++-----+-------+------------+
+|   1 | Alien | 2025-06-23 |
+|   2 | Bob   | 2025-06-23 |
++-----+-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from review;
++-----+------+------+--------+
+| rid | bid  | mid  | rating |
++-----+------+------+--------+
+| 201 |  101 |    1 |      4 |
+| 202 |  102 |    2 |      5 |
++-----+------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee;
++-----+-------+--------+
+| eid | ename | salary |
++-----+-------+--------+
+| 101 | alice |  20000 |
+| 102 | bob   |  25000 |
++-----+-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from department;
++-----+--------+
+| did | dname  |
++-----+--------+
+|  21 | Bsc it |
+|  22 | Bsc ct |
++-----+--------+
+2 rows in set (0.00 sec)
+
+mysql> notee;
