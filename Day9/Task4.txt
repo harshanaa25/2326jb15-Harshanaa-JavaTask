@@ -1,0 +1,99 @@
+College Course Registration System
+Entity 1-Student
+Attribuutes:
+student_id (PK)
+name
+email
+
+Entity 2- Course
+Attribuutes:
+course_id (PK)
+course_name
+credits
+dept_id (FK)
+
+Entity 3- Department
+Attribuutes:
+dept_id (PK)
+dept_name
+
+Entity 4- Registration
+Attribuutes:
+student_id (FK)
+course_id (FK)
+semester
+grade
+
+
+Functional Dependencies
+student_id → name, email
+
+course_id → course_name, credits, dept_id
+
+dept_id → dept_name
+
+student_id, course_id → semester, grade
+
+Normalization Steps
+1NF:
+All attributes are atomic.
+
+2NF:
+All non-key attributes depend on the whole key.
+
+3NF:
+No transitive dependencies exist.
+
+
+Entities and Attributes (after Normalization to 3NF)
+1. Student
+student_id (PK)
+name
+email
+
+2. Department
+dept_id (PK)
+dept_name
+
+3. Course
+course_id (PK)
+course_name
+credits
+dept_id (FK)
+
+4. Registration
+student_id (FK)
+course_id (FK)
+semester
+grade
+Composite PK: (student_id, course_id)
+
+
+create table student (
+    student_id int primary key,
+    name varchar(100),
+    email varchar(100)
+);
+
+create table department (
+    dept_id int primary key,
+    dept_name varchar(100)
+);
+
+create table course (
+    course_id int primary key,
+    course_name varchar(100),
+    credits int,
+    dept_id int,
+    foreign key (dept_id) references department(dept_id)
+);
+
+create table registration (
+    student_id int,
+    course_id int,
+    semester varchar(10),
+    grade varchar(2),
+    primary key (student_id, course_id),
+    foreign key (student_id) references student(student_id),
+    foreign key (course_id) references course(course_id)
+);

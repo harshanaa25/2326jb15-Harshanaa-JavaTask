@@ -1,0 +1,67 @@
+Entities and Attributes (Normalized to 3NF):
+1. Book
+book_id (PK)
+title
+author
+isbn
+publisher
+year
+
+2. Member
+member_id (PK)
+name
+email
+phone
+
+3. Loan
+loan_id (PK)
+book_id (FK)
+member_id (FK)
+loan_date
+return_date
+
+4. Staff
+staff_id (PK)
+name
+email
+role
+
+SQL CREATE TABLE Scripts:
+
+create table book (
+    book_id int primary key,
+    title varchar(200),
+    author varchar(100),
+    isbn varchar(20),
+    publisher varchar(100),
+    year int
+);
+
+
+create table member (
+    member_id int primary key,
+    name varchar(100),
+    email varchar(100),
+    phone varchar(15)
+);
+
+
+create table loan (
+    loan_id int primary key,
+    book_id int,
+    member_id int,
+    loan_date date,
+    return_date date,
+    foreign key (book_id) references book(book_id),
+    foreign key (member_id) references member(member_id)
+);
+
+
+create table staff (
+    staff_id int primary key,
+    name varchar(100),
+    email varchar(100),
+    role varchar(50)
+);
+
+

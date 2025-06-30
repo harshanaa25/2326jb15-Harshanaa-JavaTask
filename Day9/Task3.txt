@@ -1,0 +1,20 @@
+create table author (
+    author_id int primary key,
+    author_name varchar(20) not null,
+);
+
+create table publisher (
+    publisher_id int primary key,
+    publisher_name varchar(50) not null,
+    address varchar(200)
+);
+
+create table book (
+    book_id int primary key,
+    title varchar(100) not null,
+    price decimal(10, 2),
+    author_id int,
+    publisher_id int,
+    foreign key (author_id) references author(author_id),
+    foreign key (publisher_id) references publisher(publisher_id)
+);
